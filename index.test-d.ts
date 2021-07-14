@@ -1,10 +1,10 @@
 import {expectType, expectError} from 'tsd';
-import activeWin = require('.');
-import {Result, LinuxResult, MacOSResult, WindowsResult} from '.';
+import activeWindow = require('./index.js');
+import {Result, LinuxResult, MacOSResult, WindowsResult} from './index.js';
 
-expectType<Promise<Result | undefined>>(activeWin());
+expectType<Promise<Result | undefined>>(activeWindow());
 
-const result = activeWin.sync();
+const result = activeWindow.sync({screenRecordingPermission: false});
 
 expectType<Result | undefined>(result);
 

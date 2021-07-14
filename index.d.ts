@@ -1,4 +1,15 @@
-declare namespace activeWin {
+declare namespace activeWindow {
+	interface Options {
+		/**
+		Enable the screen recording permission check. _(macOS)_
+
+		Setting this to `false` will prevent the screen recording permission prompt on macOS versions 10.15 and newer. The `title` property in the result will always be set to an empty string.
+
+		@default true
+		*/
+		readonly screenRecordingPermission: boolean;
+	}
+
 	interface BaseOwner {
 		/**
 		Name of the app.
@@ -63,7 +74,7 @@ declare namespace activeWin {
 		owner: MacOSOwner;
 
 		/**
-		URL of the active browser tab if the active window is Safari, Chrome, Edge, or Brave.
+		URL of the active browser tab if the active window is Safari (includes Technology Preview), Chrome (includes Beta, Dev, and Canary), Edge (includes Beta, Dev, and Canary), Brave (includes Beta and Nightly), Mighty, Ghost Browser, WaveBox, Sidekick, Opera (includes Beta and Developer), or Vivaldi.
 		*/
 		url?: string;
 	}
@@ -79,7 +90,7 @@ declare namespace activeWin {
 	type Result = MacOSResult | LinuxResult | WindowsResult;
 }
 
-declare const activeWin: {
+declare const activeWindow: {
 	/**
 	Get metadata about the [active window](https://en.wikipedia.org/wiki/Active_window) (title, id, bounds, owner, etc).
 
@@ -87,10 +98,10 @@ declare const activeWin: {
 
 	@example
 	```
-	import activeWin = require('active-win');
+	import activeWindow = require('active-win');
 
 	(async () => {
-		const result = await activeWin();
+		const result = await activeWindow();
 
 		if (!result) {
 			return;
@@ -107,7 +118,7 @@ declare const activeWin: {
 	})();
 	```
 	*/
-	(): Promise<activeWin.Result | undefined>;
+	(options?: activeWindow.Options): Promise<activeWindow.Result | undefined>;
 
 	/**
 	Synchronously get metadata about the [active window](https://en.wikipedia.org/wiki/Active_window) (title, id, bounds, owner, etc).
@@ -116,9 +127,9 @@ declare const activeWin: {
 
 	@example
 	```
-	import activeWin = require('active-win');
+	import activeWindow = require('active-win');
 
-	const result = activeWin.sync();
+	const result = activeWindow.sync();
 
 	if (result) {
 		if (result.platform === 'macos') {
@@ -132,7 +143,7 @@ declare const activeWin: {
 	}
 	```
 	*/
-	sync(): activeWin.Result | undefined;
+	sync(options?: activeWindow.Options): activeWindow.Result | undefined;
 };
 
-export = activeWin;
+export = activeWindow;

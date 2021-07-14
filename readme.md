@@ -1,4 +1,4 @@
-# active-win [![Build Status](https://travis-ci.org/sindresorhus/active-win.svg?branch=master)](https://travis-ci.org/sindresorhus/active-win)
+# active-win
 
 Get metadata about the [active window](https://en.wikipedia.org/wiki/Active_window) (title, id, bounds, owner, URL, etc)
 
@@ -15,10 +15,10 @@ $ npm install active-win
 ## Usage
 
 ```js
-const activeWin = require('active-win');
+const activeWindow = require('active-win');
 
 (async () => {
-	console.log(await activeWin());
+	console.log(await activeWindow(options));
 	/*
 	{
 		title: 'Unicorns - Google Search',
@@ -45,15 +45,24 @@ const activeWin = require('active-win');
 
 ## API
 
-### activeWin()
+### activeWindow(options?)
 
-Returns a `Promise<Object>` with the result, or `Promise<undefined>` if there is no active window or if the information is not available.
+#### options
 
-### activeWin.sync()
+Type: `object`
 
-Returns an `Object` with the result, or `undefined` if there is no active window.
+##### screenRecordingPermission **(macOS only)**
+
+Type: `boolean`\
+Default: `true`
+
+Enable the screen recording permission check. Setting this to `false` will prevent the screen recording permission prompt on macOS versions 10.15 and newer. The `title` property in the result will always be set to an empty string.
+
+### activeWindow.sync(options?)
 
 ## Result
+
+Returns a `Promise<object>` with the result, or `Promise<undefined>` if there is no active window or if the information is not available.
 
 - `platform` *(string)* - `'macos'` | `'linux'` | `'windows'`
 - `title` *(string)* - Window title
@@ -68,7 +77,7 @@ Returns an `Object` with the result, or `undefined` if there is no active window
 	- `processId` *(number)* - Process identifier
 	- `bundleId` *(string)* - Bundle identifier *(macOS only)*
 	- `path` *(string)* - Path to the app
-- `url` *(string?)* - URL of the active browser tab if the active window is Safari, Chrome, Edge, or Brave *(macOS only)*
+- `url` *(string?)* - URL of the active browser tab if the active window is Safari (includes Technology Preview), Chrome (includes Beta, Dev, and Canary), Edge (includes Beta, Dev, and Canary), Brave (includes Beta and Nightly), Mighty, Ghost Browser, Wavebox, Sidekick, Opera (includes Beta and Developer), or Vivaldi *(macOS only)*
 - `memoryUsage` *(number)* - Memory usage by the window owner process
 
 ## OS support
